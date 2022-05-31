@@ -24,12 +24,14 @@ show_help() {
   echo "-O --pgo                  Use profile guided optimizations (pgo)."
   echo "                          macOS: disabled when used with --bundle,"
   echo "                          Windows: Implicit being the only option."
+  echo "-r --release              Compile in release mode."
   echo
 }
 
 main() {
   local platform="$(get_platform_name)"
   local build_dir="$(get_default_build_dir)"
+  local build_type="debug"
   local prefix=/
   local force_fallback
   local bundle
@@ -76,6 +78,10 @@ main() {
         pgo="-Db_pgo=generate"
         shift
         ;;
+      -r|--release)
+        build_type="release"
+        shift
+        ;;
       *)
         # unknown option
         ;;
@@ -95,7 +101,7 @@ main() {
   rm -rf "${build_dir}"
 
   CFLAGS=$CFLAGS LDFLAGS=$LDFLAGS meson setup \
-    --buildtype=release \
+    --buildtype=$build_type \
     --prefix "$prefix" \
     $force_fallback \
     $bundle \
