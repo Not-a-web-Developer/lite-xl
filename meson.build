@@ -108,6 +108,7 @@ if not get_option('source-only')
     sdl_options += 'use_video=enabled'
     sdl_options += 'use_atomic=enabled'
     sdl_options += 'use_threads=enabled'
+    sdl_options += 'use_render=enabled'
     # investigate if this is truly needed
     # Do not remove before https://github.com/libsdl-org/SDL/issues/5413 is released
     sdl_options += 'use_events=enabled'
@@ -115,6 +116,8 @@ if not get_option('source-only')
     # we leave this up to what the host system has
     sdl_options += 'use_video_x11=auto'
     sdl_options += 'use_video_wayland=auto'
+    sdl_options += 'use_video_opengl=auto'
+    sdl_options += 'use_video_openglesv2=auto'
 
     # we don't need these
     sdl_options += 'use_timers=disabled'
@@ -123,8 +126,6 @@ if not get_option('source-only')
     sdl_options += 'use_audio=disabled'
     sdl_options += 'use_cpuinfo=disabled'
     sdl_options += 'use_joystick=disabled'
-    sdl_options += 'use_video_opengl=disabled'
-    sdl_options += 'use_video_openglesv2=disabled'
     sdl_options += 'use_video_vulkan=disabled'
     sdl_options += 'use_video_offscreen=disabled'
     sdl_options += 'use_power=disabled'
