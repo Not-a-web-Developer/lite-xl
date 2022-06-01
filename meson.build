@@ -108,14 +108,20 @@ if not get_option('source-only')
     sdl_options += 'use_video=enabled'
     sdl_options += 'use_atomic=enabled'
     sdl_options += 'use_threads=enabled'
-    sdl_options += 'use_render=enabled'
     # investigate if this is truly needed
     # Do not remove before https://github.com/libsdl-org/SDL/issues/5413 is released
     sdl_options += 'use_events=enabled'
 
+    if host_machine.system() == 'darwin' or host_machine.system() == 'windows'
+        sdl_options += 'use_video_x11=disabled'
+        sdl_options += 'use_video_wayland=disabled'
+    else
+        sdl_options += 'use_render=enabled'
+        sdl_options += 'use_video_x11=auto'
+        sdl_options += 'use_video_wayland=auto'
+    endif
+
     # we leave this up to what the host system has
-    sdl_options += 'use_video_x11=auto'
-    sdl_options += 'use_video_wayland=auto'
     sdl_options += 'use_video_opengl=auto'
     sdl_options += 'use_video_openglesv2=auto'
 
