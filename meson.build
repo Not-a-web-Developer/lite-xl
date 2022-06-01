@@ -126,6 +126,9 @@ if not get_option('source-only')
     if host_machine.system() != 'windows'
         sdl_options += 'use_video_opengl=auto'
         sdl_options += 'use_video_openglesv2=auto'
+    else
+        sdl_options += 'use_video_opengl=disabled'
+        sdl_options += 'use_video_openglesv2=disabled'
     endif
 
     # we don't need these
