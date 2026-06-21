@@ -25,9 +25,10 @@ local default_font_size = 12
 local line_height_offset = 8
 
 local function load_fonts()
+  local opts = {antialiasing="grayscale", hinting="full"}
   for _, name in ipairs(font_names) do
     local path = DATADIR .. "/fonts/" .. name .. ".ttf"
-    fonts[name] = renderer.font.load(path, default_font_size * SCALE)
+    fonts[name] = renderer.font.load(path, default_font_size * SCALE, opts)
   end
 end
 
@@ -43,7 +44,7 @@ local function apply_font()
   local size = plugin_config.font_size
   -- Reload the font at the current size
   local path = DATADIR .. "/fonts/" .. name .. ".ttf"
-  style.code_font = renderer.font.load(path, size * SCALE)
+  style.code_font = renderer.font.load(path, size * SCALE, {antialiasing="grayscale", hinting="full"})
   -- Update line height: font_size + 8px (Left's formula)
   config.line_height = (size + line_height_offset) / size
   core.redraw = true
@@ -88,7 +89,7 @@ do
   local name = font_names[plugin_config.font_index]
   local size = plugin_config.font_size
   local path = DATADIR .. "/fonts/" .. name .. ".ttf"
-  style.code_font = renderer.font.load(path, size * SCALE)
+  style.code_font = renderer.font.load(path, size * SCALE, {antialiasing="grayscale", hinting="full"})
   config.line_height = (size + line_height_offset) / size
 end
 
