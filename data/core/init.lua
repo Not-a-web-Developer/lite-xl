@@ -369,6 +369,8 @@ function core.init()
   end
 
   -- Load core and user plugins giving preference to user ones with same name.
+  -- Left XL: disable treeview by default (navi replaces it)
+  config.plugins.treeview = config.plugins.treeview or false
   local plugins_success, plugins_refuse_list = core.load_plugins()
 
   core.window = core.window or renwindow._restore() or renwindow.create("")
