@@ -133,7 +133,7 @@ The full spec is in `UX.md`. Key behaviors to remember:
 ## What not to do
 
 - Don't read the full `synonyms.js` or `synonyms_db.lua` into context — use scripts
-- Don't modify `WORKLOG.md` in the Left repo — it's human-maintained
+- Keep `WORKLOG.md` updated after each discrete unit of work
 - Don't change `config.plugins.treeview` in user config — disable it in code
 - Don't run `meson install` — just build for now
 - Don't worry about backwards compatibility with lite-xl plugins
