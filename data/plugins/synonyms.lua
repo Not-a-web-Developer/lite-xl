@@ -19,6 +19,16 @@ local synonyms_db = require "plugins.synonyms_db"
 
 local synonyms = synonyms_db
 
+-- Startup diagnostic
+if type(synonyms) == "table" then
+  local count = 0
+  for _ in pairs(synonyms) do count = count + 1 end
+  core.log_quiet("synonyms: loaded %d entries, abandon=%s", count,
+    type(synonyms["abandon"]) == "table" and tostring(#synonyms["abandon"]) .. " syns" or "MISSING")
+else
+  core.error("synonyms: DB failed to load (type=%s)", type(synonyms))
+end
+
 --- All known words (synonym DB root + synonyms + doc words)
 ---@type { [string]: boolean }
 local vocabulary = {}
