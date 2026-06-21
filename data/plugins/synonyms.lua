@@ -302,10 +302,11 @@ command.add(nil, {
 })
 
 -- Keybindings (appended, not overwriting)
-keymap.add {
+-- Overwrite Tab and Shift+Tab (don't append — doc:indent would eat Tab)
+keymap.add({
   ["tab"] = "synonyms:accept",
   ["shift+tab"] = "synonyms:cycle",
-}
+}, true)
 
 -- ============================================================================
 -- Initialisation
@@ -321,10 +322,12 @@ core.add_thread(function()
   end
 end)
 
--- Initial state
+-- Continuously update suggestion/synonym state as user types
 core.add_thread(function()
-  coroutine.yield(0.5)
-  update_state()
+  while true do
+    coroutine.yield(0.15)
+    update_state()
+  end
 end)
 
 return {
