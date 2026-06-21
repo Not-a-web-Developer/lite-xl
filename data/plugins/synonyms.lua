@@ -184,6 +184,9 @@ local function update_synonym_state()
   end
 end
 
+-- Track last cursor word to detect word changes (for Space/Enter reset)
+local last_cursor_word = nil
+
 local function update_state()
   -- Detect word change: if the cursor word changed, reset synonym state
   -- (this handles Space, Enter, mouse clicks — any cursor movement that
@@ -270,9 +273,6 @@ end
 -- ============================================================================
 -- Event hooks (non-destructive chaining)
 -- ============================================================================
-
--- Track last cursor word to detect word changes (for Space/Enter reset)
-local last_cursor_word = nil
 
 -- Hook keypressed to track shift key
 local orig_on_key_pressed = keymap.on_key_pressed
