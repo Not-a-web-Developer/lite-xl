@@ -21,3 +21,14 @@
 - **Result**: 4,023 entries, 528KB, ~4,030 lines. Validates correctly under Lua 5.4.
 - **Note**: The original JS file is 48,677 lines because each synonym array is
   pretty-printed across multiple lines.  The Lua output is compact (one entry per line).
+
+### [2026-06-22 04:15] Phase 5 & 3 complete — Fonts + Insert mode
+- **Action**: Wrote `data/plugins/fonts.lua` — 3 fonts, cycling, size control,
+  persistence to `config.plugins.fonts`. Copied Left's bundled fonts
+  (Input Mono, Zilla Slab, Inter UI) to `data/fonts/`.
+- **Action**: Wrote `data/plugins/insert.lua` — 8 insert shortcuts with
+  smart prefix insertion (single-line start, multi-line per-line, mid-line
+  at-start). Command predicates ensure shortcuts only fire in insert mode.
+  Date format: DD-Mon-YYYY per Left spec.
+- **Key conflict resolved**: `ctrl+/` falls through to `doc:toggle-line-comments`
+  when not in insert mode. `ctrl+-` is unambiguous.
