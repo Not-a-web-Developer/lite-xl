@@ -245,7 +245,10 @@ local function autocomplete_accept()
 end
 
 local function synonym_cycle()
-  if not plugin_state.synonyms_list then return end
+  if not plugin_state.synonyms_list then
+    core.log_quiet("synonyms: cycle called but synonyms_list is nil")
+    return
+  end
   local n = #plugin_state.synonyms_list
   plugin_state.synonym_index = (plugin_state.synonym_index % n) + 1
   core.redraw = true
