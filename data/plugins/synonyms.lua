@@ -245,6 +245,9 @@ local function autocomplete_accept()
 end
 
 local function synonym_cycle()
+  core.log_quiet("synonyms: cycle CALLED, list=%s, index=%d",
+    plugin_state.synonyms_list and ("yes(%d)"):format(#plugin_state.synonyms_list) or "nil",
+    plugin_state.synonym_index)
   if not plugin_state.synonyms_list then
     core.log_quiet("synonyms: cycle called but synonyms_list is nil")
     return
