@@ -1,6 +1,6 @@
 -- mod-version:4 -- lite-xl 2.1
 -- Font cycling plugin for Left XL
--- Bundles three fonts: mono (default), serif, sans-serif
+-- Cycles between mono (JetBrains Mono), sans-serif (Fira Sans), serif (Zilla Slab)
 -- Shortcuts: Ctrl+Shift+, (prev), Ctrl+Shift+. (next)
 --            Ctrl+= (+1px), Ctrl+- (-1px), Ctrl+0 (reset to 12px)
 
@@ -10,10 +10,14 @@ local config = require "core.config"
 local keymap = require "core.keymap"
 local style = require "core.style"
 
----@type renderer.font[]
-local fonts = {}
+local font_opts = {antialiasing="grayscale", hinting="full"}
 
-local font_names = { "mono", "serif", "sans_serif" }
+-- Font definitions: display name, filename
+local font_specs = {
+  { name = "mono",       file = "JetBrainsMono-Regular.ttf" },
+  { name = "serif",      file = "serif.ttf" },
+  { name = "sans_serif", file = "FiraSans-Regular.ttf" },
+}
 
 ---@type { font_index: integer, font_size: integer }
 local plugin_config = {}
@@ -24,40 +28,28 @@ local default_font_size = 12
 ---Line height = font_size + line_height_offset
 local line_height_offset = 8
 
-local function load_fonts()
-  local opts = {antialiasing="grayscale", hinting="full"}
-  for _, name in ipairs(font_names) do
-    local path = DATADIR .. "/fonts/" .. name .. ".ttf"
-    fonts[name] = renderer.font.load(path, default_font_size * SCALE, opts)
-  end
-end
-
-local function save_config()
+local function apply_font()
+  local spec = font_specs[plugin_config.font_index]
+  local size = plugin_config.font_size
+  local path = DATADIR .. "/fonts/" .. spec.file
+  style.code_font = renderer.font.load(path, size * SCALE, font_opts)
+  -- Update line height: font_size + 8px (Left's formula)
+  config.line_height = (size + line_height_offset) / size
+  core.redraw = true
+  -- Persist config
   config.plugins.fonts = {
     font_index = plugin_config.font_index,
     font_size = plugin_config.font_size,
   }
 end
 
-local function apply_font()
-  local name = font_names[plugin_config.font_index]
-  local size = plugin_config.font_size
-  -- Reload the font at the current size
-  local path = DATADIR .. "/fonts/" .. name .. ".ttf"
-  style.code_font = renderer.font.load(path, size * SCALE, {antialiasing="grayscale", hinting="full"})
-  -- Update line height: font_size + 8px (Left's formula)
-  config.line_height = (size + line_height_offset) / size
-  core.redraw = true
-  save_config()
-end
-
 local function next_font()
-  plugin_config.font_index = plugin_config.font_index % #font_names + 1
+  plugin_config.font_index = plugin_config.font_index % #font_specs + 1
   apply_font()
 end
 
 local function prev_font()
-  plugin_config.font_index = (plugin_config.font_index - 2) % #font_names + 1
+  plugin_config.font_index = (plugin_config.font_index - 2) % #font_specs + 1
   apply_font()
 end
 
@@ -80,16 +72,14 @@ end
 
 -- Load saved config, or use defaults
 do
-  load_fonts()
-
   local saved = config.plugins.fonts or {}
   plugin_config.font_index = saved.font_index or 1      -- mono
   plugin_config.font_size = saved.font_size or default_font_size
   -- Apply saved/default font
-  local name = font_names[plugin_config.font_index]
+  local spec = font_specs[plugin_config.font_index]
   local size = plugin_config.font_size
-  local path = DATADIR .. "/fonts/" .. name .. ".ttf"
-  style.code_font = renderer.font.load(path, size * SCALE, {antialiasing="grayscale", hinting="full"})
+  local path = DATADIR .. "/fonts/" .. spec.file
+  style.code_font = renderer.font.load(path, size * SCALE, font_opts)
   config.line_height = (size + line_height_offset) / size
 end
 
