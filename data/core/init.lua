@@ -369,9 +369,10 @@ function core.init()
   end
 
   -- Load core and user plugins giving preference to user ones with same name.
-  -- Left XL: disable treeview and autocomplete (navi + synonyms replace them)
+  -- Left XL: disable treeview, autocomplete, scale (navi + synonyms replace them; scale uses ctrl+-)
   config.plugins.treeview = false
   config.plugins.autocomplete = false
+  config.plugins.scale = false
   local plugins_success, plugins_refuse_list = core.load_plugins()
 
   core.window = core.window or renwindow._restore() or renwindow.create("")
