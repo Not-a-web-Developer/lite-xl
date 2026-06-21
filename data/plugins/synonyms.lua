@@ -321,6 +321,12 @@ keymap.add({
   ["shift+tab"] = "synonyms:cycle",
 }, true)
 
+-- Diagnostic: verify bindings
+local ok, strokes = pcall(function()
+  return {keymap.get_binding("synonyms:cycle")}
+end)
+core.log_quiet("synonyms: cycle bound to strokes: %s", table.concat(strokes or {"NONE"}, ", "))
+
 -- ============================================================================
 -- Initialisation
 -- ============================================================================
