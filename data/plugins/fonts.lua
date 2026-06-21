@@ -10,6 +10,8 @@ local config = require "core.config"
 local keymap = require "core.keymap"
 local style = require "core.style"
 
+local font_opts = {antialiasing="grayscale", hinting="slight"}
+
 -- Font definitions
 local font_specs = {
   { name = "mono",       file = "JetBrainsMono-Regular.ttf" },
@@ -23,7 +25,7 @@ local function apply_font()
   local spec = font_specs[plugin_config.font_index]
   local size = style.code_font:get_height() -- preserve current size
   local path = DATADIR .. "/fonts/" .. spec.file
-  style.code_font = renderer.font.load(path, size)
+  style.code_font = renderer.font.load(path, size, font_opts)
   core.redraw = true
   config.plugins.fonts = {
     font_index = plugin_config.font_index,
@@ -50,7 +52,7 @@ do
     local spec = font_specs[plugin_config.font_index]
     local size = style.code_font:get_height()
     local path = DATADIR .. "/fonts/" .. spec.file
-    style.code_font = renderer.font.load(path, size)
+    style.code_font = renderer.font.load(path, size, font_opts)
   end
 end
 
