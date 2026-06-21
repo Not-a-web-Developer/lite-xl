@@ -32,3 +32,11 @@
   Date format: DD-Mon-YYYY per Left spec.
 - **Key conflict resolved**: `ctrl+/` falls through to `doc:toggle-line-comments`
   when not in insert mode. `ctrl+-` is unambiguous.
+
+### [2026-06-22 04:30] Phase 2 complete — Synonyms + Autocomplete
+- **Action**: Wrote `data/plugins/synonyms.lua` — Tab autocomplete (inserts suffix + space,
+  or two nbsp if no suggestion), Shift+Tab synonym cycling (applied on Shift release,
+  capitalisation preserved, plural stripping). Word-change detection resets state.
+  Event hooks chain non-destructively.
+- **Action**: Disabled treeview by default in `data/core/init.lua` (`config.plugins.treeview = false`).
+- **Status**: Phases 2, 3, 5 complete. Phase 1 (navi) and Phase 4 (stats bar) remain.
