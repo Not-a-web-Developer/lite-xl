@@ -1,4 +1,4 @@
-project('lite-xl',
+project('left-xl',
     ['c'],
     version : '2.1.7',
     license : 'MIT',

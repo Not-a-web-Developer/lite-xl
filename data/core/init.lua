@@ -261,7 +261,7 @@ end
 
 function core.init()
   core.log_items = {}
-  core.log_quiet("Lite XL version %s - mod-version %s", VERSION, MOD_VERSION_STRING)
+  core.log_quiet("Left XL version %s - mod-version %s", VERSION, MOD_VERSION_STRING)
 
   command = require "core.command"
   keymap = require "core.keymap"
@@ -919,7 +919,7 @@ end
 
 
 function core.compose_window_title(title)
-  return (title == "" or title == nil) and "Lite XL" or title .. " - Lite XL"
+  return (title == "" or title == nil) and "Left XL" or title .. " - Left XL"
 end
 
 
