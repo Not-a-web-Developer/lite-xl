@@ -290,11 +290,16 @@ end
 -- Event hooks (non-destructive chaining)
 -- ============================================================================
 
--- Hook keypressed to track shift key
+-- Hook keypressed to track shift key AND manually handle shift+tab
 local orig_on_key_pressed = keymap.on_key_pressed
 function keymap.on_key_pressed(k, ...)
   if k == "left shift" or k == "right shift" then
     shift_held = true
+  elseif k == "tab" and shift_held then
+    -- Shift+Tab detected: manually cycle
+    core.log_quiet("synonyms: shift+tab MANUAL cycle")
+    synonym_cycle()
+    return true
   end
   return orig_on_key_pressed(k, ...)
 end
