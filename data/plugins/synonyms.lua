@@ -170,7 +170,6 @@ end
 
 local function update_synonym_state()
   plugin_state.synonyms_list = nil
-  plugin_state.synonym_index = 0
   plugin_state.synonym_word = nil
 
   local dv = core.active_view
