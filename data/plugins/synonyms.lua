@@ -244,13 +244,7 @@ local function autocomplete_accept()
 end
 
 local function synonym_cycle()
-  core.log_quiet("synonyms: cycle CALLED, list=%s, index=%d",
-    plugin_state.synonyms_list and ("yes(%d)"):format(#plugin_state.synonyms_list) or "nil",
-    plugin_state.synonym_index)
-  if not plugin_state.synonyms_list then
-    core.log_quiet("synonyms: cycle called but synonyms_list is nil")
-    return
-  end
+  if not plugin_state.synonyms_list then return end
   local n = #plugin_state.synonyms_list
   plugin_state.synonym_index = (plugin_state.synonym_index % n) + 1
   core.redraw = true
@@ -291,12 +285,14 @@ end
 
 -- Hook keypressed to track shift key AND manually handle shift+tab
 local orig_on_key_pressed = keymap.on_key_pressed
+local shift_tab_handled = false  -- prevent key repeat spam
 function keymap.on_key_pressed(k, ...)
   if k == "left shift" or k == "right shift" then
     shift_held = true
-  elseif k == "tab" and shift_held then
-    -- Shift+Tab detected: manually cycle
-    core.log_quiet("synonyms: shift+tab MANUAL cycle")
+    shift_tab_handled = false  -- reset on fresh shift press
+  elseif k == "tab" and shift_held and not shift_tab_handled then
+    -- Shift+Tab detected: manually cycle (only once per shift press)
+    shift_tab_handled = true
     synonym_cycle()
     return true
   end
@@ -329,12 +325,6 @@ keymap.add({
   ["shift+tab"] = "synonyms:cycle",
   ["backtab"] = "synonyms:cycle",
 }, true)
-
--- Diagnostic: verify bindings
-local ok, strokes = pcall(function()
-  return {keymap.get_binding("synonyms:cycle")}
-end)
-core.log_quiet("synonyms: cycle bound to strokes: %s", table.concat(strokes or {"NONE"}, ", "))
 
 -- ============================================================================
 -- Initialisation
