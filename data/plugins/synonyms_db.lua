@@ -1,3 +1,4 @@
+-- mod-version:4
 -- Auto-generated from Left synonyms.js
 -- Do not edit manually. Run convert-synonyms.js to regenerate.
 
