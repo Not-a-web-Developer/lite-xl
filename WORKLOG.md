@@ -14,3 +14,10 @@
 - **Deferred**: Reader mode, theme system, frameless, operator mode, open-URL.
 - **Parallel work**: Phases 5 (fonts), 3 (insert mode), 2 (synonyms) independent.
 - **Next**: Synonyms DB conversion script.
+
+### [2026-06-22 03:45] Synonym DB conversion
+- **Action**: Wrote `scripts/convert-synonyms.js` — reads Left's `synonyms.js`,
+  parses the JS object via `eval()`, writes Lua table to `data/plugins/synonyms_db.lua`.
+- **Result**: 4,023 entries, 528KB, ~4,030 lines. Validates correctly under Lua 5.4.
+- **Note**: The original JS file is 48,677 lines because each synonym array is
+  pretty-printed across multiple lines.  The Lua output is compact (one entry per line).
