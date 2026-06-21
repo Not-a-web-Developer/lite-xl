@@ -187,6 +187,12 @@ end
 -- Track last cursor word to detect word changes (for Space/Enter reset)
 local last_cursor_word = nil
 
+local function reset_synonym_state()
+  plugin_state.synonyms_list = nil
+  plugin_state.synonym_index = 0
+  plugin_state.synonym_word = nil
+end
+
 local function update_state()
   -- Detect word change: if the cursor word changed, reset synonym state
   -- (this handles Space, Enter, mouse clicks — any cursor movement that
@@ -204,12 +210,6 @@ local function update_state()
   update_suggestion_state()
   update_synonym_state()
   core.redraw = true
-end
-
-local function reset_synonym_state()
-  plugin_state.synonyms_list = nil
-  plugin_state.synonym_index = 0
-  plugin_state.synonym_word = nil
 end
 
 -- ============================================================================
