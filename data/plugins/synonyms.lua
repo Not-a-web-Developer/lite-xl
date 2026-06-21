@@ -319,9 +319,11 @@ command.add(nil, {
 
 -- Keybindings (appended, not overwriting)
 -- Overwrite Tab and Shift+Tab (don't append — doc:indent would eat Tab)
+-- Also bind "backtab" for Wayland which sends ISO_Left_Tab instead of shift+tab
 keymap.add({
   ["tab"] = "synonyms:accept",
   ["shift+tab"] = "synonyms:cycle",
+  ["backtab"] = "synonyms:cycle",
 }, true)
 
 -- Diagnostic: verify bindings
