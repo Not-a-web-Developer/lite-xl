@@ -1,4 +1,4 @@
--- mod-version:3 -- lite-xl 2.1
+-- mod-version:4 -- lite-xl 2.1
 -- Synonym and autocomplete plugin for Left XL
 -- Loads the synonym DB, builds a vocabulary from it + current document,
 -- and provides Tab (autocomplete) and Shift+Tab (synonym cycling).

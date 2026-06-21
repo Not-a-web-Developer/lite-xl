@@ -1,4 +1,4 @@
--- mod-version:3 -- lite-xl 2.1
+-- mod-version:4 -- lite-xl 2.1
 -- Insert mode plugin for Left XL
 -- Ctrl+I enters insert mode. Esc or any insert shortcut exits.
 -- Stats bar shows help text while active.
