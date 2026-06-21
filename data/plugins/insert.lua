@@ -91,7 +91,7 @@ end
 
 local function insert_line(dv)
   local doc = dv.doc
-  _, col = doc:get_selection()
+  local _, col = doc:get_selection()
   local text = "\n===================== \n"
   if col > 1 then
     -- If not at start of line, add an extra newline before
